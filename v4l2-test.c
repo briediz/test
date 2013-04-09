@@ -103,11 +103,24 @@ int main ()
   if (ioctl (deviceHandle, VIDIOC_G_FMT, &captureWindow) == -1)
   {
 	  	  perror ("VIDIOC_G_FMT");
+  } else {
+	  width = captureWindow.fmt.pix.width;
+	  height = captureWindow.fmt.pix.height;
+	  printf ("height %d width %d \n", width, height);
   }
-  width = captureWindow.fmt.pix.width;
-  height = captureWindow.fmt.pix.height;
 
-  printf ("height %d width %d \n", width, height);
+
+	struct v4l2_format captureWindow;
+	memset (&captureWindow, 0, sizeof (captureWindow));
+	if (ioctl (deviceHandle, VIDIOC_QUERYBUF, &captureWindow) == -1)
+	{
+		perror ("VIDIOC_QUERYBUF");
+	} else {
+		printf ("height %d width %d \n", width, height);
+	}
+
+
+
 
 /* 
   // set input to 1 
